@@ -11,7 +11,9 @@
       <el-row :gutter="20" class="recommended">
         <el-col :md="6" :xs="24" v-for="item in recommended" :key="item.id">
           <el-card :body-style="{ padding: '20px' }">
-            <img :src="item.image.url" class="image" />
+            <nuxt-link :to="`/${item.id}`"
+              ><img :src="item.image.url" class="image"
+            /></nuxt-link>
             <div style="padding: 14px;">
               <span>{{ item.title }}</span>
               <div class="bottom clearfix">
