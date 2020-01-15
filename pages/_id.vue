@@ -96,14 +96,13 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin: auto;
+  margin: 0 10px;
   text-align: center;
   max-width: 1180px;
   padding-bottom: 50px;
 }
 
 .recommended {
-  width: 100%;
   margin-top: 50px;
   img {
     width: 100%;
@@ -153,5 +152,9 @@ export default {
 
 .el-pagination {
   padding: 30px 0;
+}
+
+.block {
+  clear: both;
 }
 </style>

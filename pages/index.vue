@@ -92,7 +92,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin: 0 auto;
+  margin: 0 10px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -102,7 +102,6 @@ export default {
 }
 
 .recommended {
-  width: 100%;
   margin-top: 50px;
   img {
     width: 100%;
@@ -135,6 +134,10 @@ export default {
 }
 
 .el-pagination {
-  padding: 0 30px;
+  padding: 30px 0;
+}
+
+.block {
+  clear: both;
 }
 </style>
