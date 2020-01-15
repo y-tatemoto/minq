@@ -1,5 +1,9 @@
 require('dotenv').config()
 export default {
+  env: {
+    API_BASE_URL: process.env.API_BASE_URL,
+    API_KEY: process.env.API_KEY 
+  },
   mode: 'spa',
   /*
    ** Headers of the page
