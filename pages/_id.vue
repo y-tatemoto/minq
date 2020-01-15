@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div>
+    <div class="container-in">
       <h1 class="title">{{ title }}</h1>
       <div class="image"><img :src="image.url" /></div>
       <div v-html="content" class="content"></div>
@@ -98,10 +98,14 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin: 0 10px;
+  margin: 0 auto;
   text-align: center;
   max-width: 1180px;
   padding-bottom: 50px;
+}
+
+.container-in {
+  margin: 0 10px;
 }
 
 .recommended {
