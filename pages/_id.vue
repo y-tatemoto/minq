@@ -123,7 +123,7 @@ export default {
 }
 
 .image {
-  max-width: 150px;
+  max-width: 500px;
   margin: auto;
   img {
     width: 100%;
