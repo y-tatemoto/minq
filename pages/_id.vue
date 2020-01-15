@@ -1,13 +1,15 @@
 <template>
   <div class="container">
     <div>
-      <logo />
-      <h1 class="title">
-        minq
-      </h1>
-      <h2 class="subtitle">
-        手軽にクイズを楽しめるWebアプリケーションです。
-      </h2>
+      <h1 class="title">{{ title }}</h1>
+      <div class="image"><img :src="image.url" /></div>
+      <div v-html="content" class="content"></div>
+      <h2 class="subtitle">答え</h2>
+      <div v-if="showAnswer" v-html="answer" class="answer"></div>
+      <el-button v-else @click="openAnswer" class="answer-btn" type="success"
+        >答えを見る</el-button
+      >
+
       <el-row :gutter="20" class="recommended">
         <el-col :md="6" :xs="24" v-for="item in recommended" :key="item.id">
           <el-card :body-style="{ padding: '20px' }">
@@ -38,14 +40,14 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
-  },
   data: () => {
     return {
+      title: '',
+      content: '',
+      answer: '',
+      image: {},
+      showAnswer: false,
       recommended: [],
       totalCount: 0,
       offset: 0,
@@ -53,25 +55,26 @@ export default {
       page: 1
     }
   },
-  computed: {
-    pageTotal() {
-      return Math.ceil(this.totalCount / this.limit)
-    }
+  async asyncData({ $axios, params }) {
+    const res = await $axios.$get(`quiz/${params.id}`)
+    return res
   },
   created() {
     this.$axios
       .$get('quiz', {
         params: {
-          limit: this.limit
+          limit: 4
         }
       })
       .then((res) => {
         this.recommended = res.contents
-        this.totalCount = res.totalCount
-        this.offset = res.offset
       })
+    this.paging(1)
   },
   methods: {
+    openAnswer() {
+      this.showAnswer = true
+    },
     paging(num) {
       this.page = num
       this.offset = this.limit * (num - 1)
@@ -84,6 +87,7 @@ export default {
         })
         .then((res) => {
           this.recommended = res.contents
+          this.totalCount = res.totalCount
         })
     }
   }
@@ -92,12 +96,9 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: auto;
   text-align: center;
+  max-width: 1180px;
   padding-bottom: 50px;
 }
 
@@ -113,21 +114,37 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 32px;
   color: #35495e;
   letter-spacing: 1px;
+  padding: 20px 0;
+}
+
+.image {
+  max-width: 150px;
+  margin: auto;
+  img {
+    width: 100%;
+  }
 }
 
 .subtitle {
-  font-weight: 300;
-  font-size: 42px;
+  font-size: 20px;
   color: #526488;
-  word-spacing: 5px;
+  padding-top: 60px;
   padding-bottom: 15px;
+}
+
+.answer-btn {
+  margin-top: 10px;
+}
+
+.answer {
+  border: 1px solid #ddd;
+  padding: 30px;
+  border-radius: 8px;
 }
 
 .links {
@@ -135,6 +152,6 @@ export default {
 }
 
 .el-pagination {
-  padding: 0 30px;
+  padding: 30px 0;
 }
 </style>

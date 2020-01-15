@@ -1,3 +1,4 @@
+require('dotenv').config()
 export default {
   mode: 'spa',
   /*
@@ -27,7 +28,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/element-ui', '@/plugins/axios'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -38,7 +39,11 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
+  axios: {
+    baseURL: process.env.API_BASE_URL,
+    https: true
+  },
   /*
    ** Build configuration
    */
