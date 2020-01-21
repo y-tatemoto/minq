@@ -10,20 +10,12 @@
       </h2>
       <el-row :gutter="20" class="recommended">
         <el-col :md="6" :xs="24" v-for="item in recommended" :key="item.id">
-          <el-card :body-style="{ padding: '20px' }">
-            <nuxt-link :to="`/${item.id}`"
-              ><img :src="item.image.url" class="image"
-            /></nuxt-link>
-            <div style="padding: 14px;">
-              <span>{{ item.title }}</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ item.createdAt }}</time>
-                <nuxt-link :to="`/${item.id}`">
-                  <el-button type="text" class="button">Open</el-button>
-                </nuxt-link>
-              </div>
-            </div>
-          </el-card>
+          <Card
+            :id="item.id"
+            :src="item.image.url"
+            :title="item.title"
+            :created="item.createdAt"
+          />
         </el-col>
       </el-row>
       <div class="block">
@@ -41,10 +33,12 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import Card from '~/components/Card.vue'
 
 export default {
   components: {
-    Logo
+    Logo,
+    Card
   },
   data: () => {
     return {
@@ -105,9 +99,6 @@ export default {
 
 .recommended {
   margin-top: 50px;
-  img {
-    width: 100%;
-  }
   .el-col {
     margin-top: 20px;
   }

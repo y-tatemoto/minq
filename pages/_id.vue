@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="quiz" class="container">
     <div class="container-in">
       <h1 class="title">{{ title }}</h1>
       <div class="image"><img :src="image.url" /></div>
@@ -12,20 +12,12 @@
 
       <el-row :gutter="20" class="recommended">
         <el-col :md="6" :xs="24" v-for="item in recommended" :key="item.id">
-          <el-card :body-style="{ padding: '20px' }">
-            <nuxt-link :to="`/${item.id}`"
-              ><img :src="item.image.url" class="image"
-            /></nuxt-link>
-            <div style="padding: 14px;">
-              <span>{{ item.title }}</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ item.createdAt }}</time>
-                <nuxt-link :to="`/${item.id}`">
-                  <el-button type="text" class="button">Open</el-button>
-                </nuxt-link>
-              </div>
-            </div>
-          </el-card>
+          <Card
+            :id="item.id"
+            :src="item.image.url"
+            :title="item.title"
+            :created="item.createdAt"
+          />
         </el-col>
       </el-row>
       <div class="block">
@@ -42,7 +34,12 @@
 </template>
 
 <script>
+import Card from '~/components/Card.vue'
+
 export default {
+  components: {
+    Card
+  },
   data: () => {
     return {
       title: '',
@@ -96,71 +93,72 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.container {
+<style lang="scss">
+#quiz.container {
   margin: 0 auto;
   text-align: center;
   max-width: 1180px;
   padding-bottom: 50px;
-}
 
-.container-in {
-  margin: 0 10px;
-}
-
-.recommended {
-  margin-top: 50px;
-  img {
-    width: 100%;
+  .container-in {
+    margin: 0 10px;
   }
-  .el-col {
-    margin-top: 20px;
+
+  .recommended {
+    margin-top: 50px;
+    .el-col {
+      margin-top: 20px;
+    }
   }
-}
 
-.title {
-  display: block;
-  font-weight: 300;
-  font-size: 32px;
-  color: #35495e;
-  letter-spacing: 1px;
-  padding: 20px 0;
-}
-
-.image {
-  max-width: 500px;
-  margin: auto;
-  img {
-    width: 100%;
+  .title {
+    display: block;
+    font-weight: 300;
+    font-size: 32px;
+    color: #35495e;
+    letter-spacing: 1px;
+    padding: 20px 0;
   }
-}
 
-.subtitle {
-  font-size: 20px;
-  color: #526488;
-  padding-top: 60px;
-  padding-bottom: 15px;
-}
+  .image {
+    max-width: 500px;
+    margin: auto;
+    img {
+      width: 100%;
+    }
+  }
 
-.answer-btn {
-  margin-top: 10px;
-}
+  .subtitle {
+    font-size: 20px;
+    color: #526488;
+    padding-top: 60px;
+    padding-bottom: 15px;
+  }
 
-.answer {
-  border: 1px solid #ddd;
-  padding: 30px;
-  border-radius: 8px;
-}
+  .answer-btn {
+    margin-top: 10px;
+  }
 
-.links {
-  padding-top: 15px;
-}
+  .answer {
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 8px;
+    img {
+      max-width: 100%;
+    }
+  }
 
-.el-pagination {
-  padding: 30px 0;
-}
+  .links {
+    padding-top: 15px;
+  }
 
-.block {
-  clear: both;
+  .el-pagination {
+    padding: 30px 0;
+  }
+
+  .block {
+    clear: both;
+    text-align: center;
+  }
 }
 </style>
